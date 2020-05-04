@@ -6,4 +6,4 @@ with ghost.start() as session:
     f = open("/build_dir/hacktivity", "wb")
     f.write(page.content)
     f.close()
-    assert page.http_status == 200 and 'Reports resolved' in page.content
+    assert page.http_status == 200
