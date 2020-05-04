@@ -27,4 +27,5 @@ jobs:
     
     - name: Check for new reports
       run: |
+        pip install bs4
         python hackerone.py
