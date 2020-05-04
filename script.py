@@ -8,6 +8,6 @@ driver = webdriver.Chrome()
 driver.get(url)
 time.sleep(30)
 
-f = open("/build_dir/hacktivity", "w")
-f.write(driver.page_source)
+f = open("/build_dir/hacktivity", "wb")
+f.write(driver.page_source.encode('utf-8'))
 f.close()
