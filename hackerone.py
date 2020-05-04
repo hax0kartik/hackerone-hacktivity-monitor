@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 
-f = open('./hackerone.html')
+f = open('./render.html')
 html = f.read()
 f.close()
 
@@ -18,6 +18,7 @@ if int(data) != int(reports_resolved):
     to_gen = int(reports_resolved) - int(data)
     print(str(to_gen) + " new reports.")
 else:
+    print("No new reports.")
     exit (-1)
 
 hacktivity = []
