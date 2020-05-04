@@ -22,7 +22,7 @@ jobs:
     - name: Generate static page
       run: |
         ls -la
-        docker run -v $GITHUB_WORKSPACE:/build_dir jeanphix/ghost.py:2.0.0-dev python3 ghost_script.py
+        docker run -v $GITHUB_WORKSPACE:/build_dir jeanphix/ghost.py:2.0.0-dev python3 /build_dir/ghost_script.py
         cat hacktivity
         
     - name: Check for new reports
