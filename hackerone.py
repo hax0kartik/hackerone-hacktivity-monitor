@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 
-f = open('./render.html')
+f = open('hacktivity')
 html = f.read()
 f.close()
 
