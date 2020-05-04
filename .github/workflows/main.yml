@@ -24,8 +24,8 @@ jobs:
         docker run -d -t -p 8050:8050 scrapinghub/splash
         sleep 30
         curl -LJO 'http://localhost:8050/render.html?url=http://hackerone.com/nintendo/hacktivity'
-        ls -la
-    
+        cat hacktivity
+        
     - name: Check for new reports
       run: |
         pip install wheel
