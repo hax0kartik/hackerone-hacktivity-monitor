@@ -21,6 +21,9 @@ jobs:
     # Runs a set of commands using the runners shell
     - name: Generate static page
       run: |
-        docker run -d -t -p 8050:8050 scrapinghub/splash --max-timeout 300
+        docker run -d -t -p 8050:8050 scrapinghub/splash
         sleep 30
         curl -LJO 'http://localhost:8050/render.html?url=http://hackerone.com/nintendo/hacktivity'
+    
+    -name: Check for new reports
+      run: python hackerone.py
