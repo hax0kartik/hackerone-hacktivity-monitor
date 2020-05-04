@@ -25,5 +25,6 @@ jobs:
         sleep 30
         curl -LJO 'http://localhost:8050/render.html?url=http://hackerone.com/nintendo/hacktivity'
     
-    -name: Check for new reports
-      run: python hackerone.py
+    - name: Check for new reports
+      run: |
+        python hackerone.py
