@@ -21,9 +21,7 @@ jobs:
     # Runs a set of commands using the runners shell
     - name: Generate static page
       run: |
-        docker run -d -t -p 8050:8050 scrapinghub/splash
-        sleep 30
-        curl -LJO 'http://localhost:8050/render.html?url=http://hackerone.com/nintendo/hacktivity'
+        docker run -v $GITHUB_WORKSPACE:/build_dir jeanphix/ghost.py:2.0.0-dev python3 ghost_script.py
         cat hacktivity
         
     - name: Check for new reports
