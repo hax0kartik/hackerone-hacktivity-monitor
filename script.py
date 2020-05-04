@@ -9,8 +9,8 @@ url = "https://hackerone.com/nintendo/hacktivity"
 options = webdriver.ChromeOptions()
 driver = webdriver.Chrome(options=options)
 driver.get(url)
-wait = WebDriverWait(webdriver, 10)
-wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'daisy-helper-text')))
+wait = WebDriverWait(webdriver, 120)
+#wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'daisy-helper-text')))
 
 print(driver.page_source)
 
