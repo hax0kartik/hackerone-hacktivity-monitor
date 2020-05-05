@@ -41,4 +41,6 @@ f = open("./commit-message.txt", "w")
 for activity in hacktivity:
     message = 'New report disclosed ' + activity + '\n'
     f.write(message)
+
+f.write("[SKIP CI]")
 f.close()
