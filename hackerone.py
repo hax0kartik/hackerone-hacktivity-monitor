@@ -57,7 +57,7 @@ f.close()
 
 f = open("./commit-message.txt", "w")
 for i in range(to_gen):
-    if hacktivity_l[0][i]:
+    if i < len(hacktivity_l[0]):
         message = 'New report disclosed ' + hacktivity_l[0][i] + '\n'
         f.write(message)
 
