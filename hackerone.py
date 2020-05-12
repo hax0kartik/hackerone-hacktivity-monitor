@@ -18,7 +18,10 @@ soups.append(BeautifulSoup(data, 'html.parser'))
 
 reports_resolved = []
 for soup in soups:
-    reports_resolved.append(int(soup.find(string='Reports resolved').find_next('span').text))
+    try:
+        reports_resolved.append(int(soup.find(string='Reports resolved').find_next('span').text))
+    except:
+        reports_resolved.append(0)
 
 hacktivity_l = []
 for soup in soups:
