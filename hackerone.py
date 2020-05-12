@@ -52,7 +52,7 @@ else:
 print(str(to_gen) + " new reports.")
 
 f = open("./hacktivity_old", "w")
-f.write(hacktivity_l[0])
+f.write(html)
 f.close()
 
 f = open("./commit-message.txt", "w")
