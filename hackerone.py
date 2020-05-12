@@ -5,42 +5,58 @@ html = f.read()
 f.close()
 
 try:
-    f = open('./data.txt')
+    f = open('hacktivity_old')
     data = f.read()
 except: 
     data = '0'
 f.close()
 
 
-soup = BeautifulSoup(html, 'html.parser')
-reports_resolved = soup.find(string='Reports resolved').find_next('span').text
-if int(data) != int(reports_resolved):
-    to_gen = int(reports_resolved) - int(data)
-    print(str(to_gen) + " new reports.")
+soups = []
+soups.append(BeautifulSoup(html, 'html.parser'))
+soups.append(BeautifulSoup(data, 'html.parser'))
+
+reports_resolved = []
+for soup in soups:
+    reports_resolved.append(int(soup.find(string='Reports resolved').find_next('span').text))
+
+hacktivity_l = []
+for soup in soups:
+    hacktivity = []
+    for div in soup.find_all('div'):
+        try:
+            if div.get('class')[0] == 'daisy-helper-text':
+                if div.parent.text.find('By') != -1:
+                    hacktivity.append(div.parent.text)
+        except:
+            continue
+    hacktivity_l.append(hacktivity)
+
+if reports_resolved[0] != reports_resolved[1]:
+    to_gen = reports_resolved[0] - reports_resolved[1]
+
+elif hacktivity_l[0] != hacktivity_l[1]:
+    from collections import Counter
+    c1 = Counter(hacktivity_l[0])
+    c2 = Counter(hacktivity_l[1])
+    diff = c2 - c1
+    to_gen = len(list(diff.elements()))
+
 else:
     print("No new reports.")
     exit (-1)
 
-hacktivity = []
-for div in soup.find_all('div'):
-    if to_gen == 0:
-        break
-    try:
-        if div.get('class')[0] == 'daisy-helper-text':
-            if div.parent.text.find('By') != -1:
-                hacktivity.append(div.parent.text)
-                to_gen = to_gen - 1
-    except:
-        continue
+print(str(to_gen) + " new reports.")
 
-f = open("./data.txt", "w")
-f.write(reports_resolved)
+f = open("./hacktivity_old", "w")
+f.write(hacktivity_l[0])
 f.close()
 
 f = open("./commit-message.txt", "w")
-for activity in hacktivity:
-    message = 'New report disclosed ' + activity + '\n'
-    f.write(message)
+for i in range(to_gen):
+    if hacktivity_l[0][i]:
+        message = 'New report disclosed ' + hacktivity_l[0][i] + '\n'
+        f.write(message)
 
 f.write("[SKIP CI]") 
 f.close()

@@ -37,7 +37,7 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "Github action"
-        git add data.txt
+        git add hacktivity_old
         git commit -F commit-message.txt
     
     - name: Push files
