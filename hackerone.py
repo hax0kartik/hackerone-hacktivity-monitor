@@ -42,7 +42,8 @@ elif hacktivity_l[0] != hacktivity_l[1]:
     from collections import Counter
     c1 = Counter(hacktivity_l[0])
     c2 = Counter(hacktivity_l[1])
-    diff = c2 - c1
+    diff = c1 - c2
+    print(list(diff.elements()))
     to_gen = len(list(diff.elements()))
 
 else:
