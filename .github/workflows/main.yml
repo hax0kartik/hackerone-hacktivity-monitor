@@ -17,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       commit: ${{ steps.s.outputs.commit }}
+      hacktivity: ${{ steps.s.outputs.hacktivity }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -36,6 +37,7 @@ jobs:
         pip install bs4
         python hackerone.py
         echo "::set-output name=commit::$(cat commit-message.txt)"
+        echo "::set-output name=hacktivity::$(cat hacktivity_old)"
 
   commit:
     needs: check
@@ -46,7 +48,9 @@ jobs:
     - name: Commit files
       env:
         MESSAGE: ${{ needs.check.outputs.commit }}
+        FILE: ${{ needs.check.outputs.hacktivity }}
       run: |
+        echo $FILE > hacktivity_old
         git config --local user.email "action@github.com"
         git config --local user.name "Github action"
         git add hacktivity_old
