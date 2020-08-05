@@ -17,7 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       commit: ${{ steps.s.outputs.commit }}
-      hacktivity: ${{ steps.s.outputs.hacktivity }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -39,8 +38,6 @@ jobs:
         pip install bs4
         python hackerone.py
         echo "::set-output name=commit::$(cat commit-message.txt)"
-        echo "::set-output name=hacktivity::$(cat hacktivity_old)"
-        echo $FILE
     
     - name: Upload artifact
     - uses: actions/upload-artifact@master
@@ -54,18 +51,17 @@ jobs:
     runs-on: ubuntu-latest
     if: needs.check.outputs.commit != 'N'
     steps:
+    - uses: actions/checkout@v2
 
-    - uses: actions/download-artifact@master
     - name: Download artifact
+    - uses: actions/download-artifact@master
       with:
         name: hacktivity_old
         path: ./hacktivity_old
 
-    - uses: actions/checkout@v2
     - name: Commit files
       env:
         MESSAGE: ${{ needs.check.outputs.commit }}
-        FILE: ${{ needs.check.outputs.hacktivity }}
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "Github action"
