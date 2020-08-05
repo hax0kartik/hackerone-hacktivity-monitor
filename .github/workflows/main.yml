@@ -32,12 +32,15 @@ jobs:
         
     - name: Check for new reports
       id: s
+      env:
+        FILE: ${{ steps.s.outputs.hacktivity }}
       run: |
         pip install wheel
         pip install bs4
         python hackerone.py
         echo "::set-output name=commit::$(cat commit-message.txt)"
         echo "::set-output name=hacktivity::$(cat hacktivity_old)"
+        echo $FILE
 
   commit:
     needs: check
@@ -50,6 +53,7 @@ jobs:
         MESSAGE: ${{ needs.check.outputs.commit }}
         FILE: ${{ needs.check.outputs.hacktivity }}
       run: |
+        echo $FILE
         echo $FILE > hacktivity_old
         git config --local user.email "action@github.com"
         git config --local user.name "Github action"
