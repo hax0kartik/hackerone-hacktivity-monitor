@@ -49,7 +49,7 @@ elif hacktivity_l[0] != hacktivity_l[1]:
 
 if to_gen == 0:
     print("No new reports.")
-    open("./commit-message.txt").write("N").close()
+    open("./commit-message.txt", "w").write("N").close()
     exit (0)
 
 print(str(to_gen) + " new reports.")
