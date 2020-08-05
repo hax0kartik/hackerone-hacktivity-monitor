@@ -50,7 +50,7 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "Github action"
         git add hacktivity_old
-        git commit -m $(MESSAGE)
+        git commit -m $MESSAGE
     
     - name: Push files
       uses: ad-m/github-push-action@master
