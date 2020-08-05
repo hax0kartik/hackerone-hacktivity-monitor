@@ -35,6 +35,7 @@ for soup in soups:
             continue
     hacktivity_l.append(hacktivity)
 
+to_gen = 0
 if reports_resolved[0] != reports_resolved[1]:
     to_gen = reports_resolved[0] - reports_resolved[1]
 
@@ -46,9 +47,9 @@ elif hacktivity_l[0] != hacktivity_l[1]:
     print(list(diff.elements()))
     to_gen = len(list(diff.elements()))
 
-else:
+if to_gen == 0:
     print("No new reports.")
-    exit (-1)
+    exit (0)
 
 print(str(to_gen) + " new reports.")
 
