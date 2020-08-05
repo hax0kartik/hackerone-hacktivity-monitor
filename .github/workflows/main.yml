@@ -11,10 +11,12 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  check:
     if: "!contains(github.event.head_commit.message, '[SKIP CI]')"
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    outputs:
+      commit: ${{ steps.s.outputs.commit }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -28,17 +30,27 @@ jobs:
         cat hacktivity
         
     - name: Check for new reports
+      id: s
       run: |
         pip install wheel
         pip install bs4
         python hackerone.py
+        echo "::set-output name=commit::$(cat commit-message.txt)"
 
+  commit:
+    needs: check
+    runs-on: ubuntu-latest
+    if: needs.check.outputs.commit != 'N'
+    steps:
+    - uses: actions/checkout@v2
     - name: Commit files
+      env:
+        MESSAGE: ${{ needs.check.outputs.commit }}
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "Github action"
         git add hacktivity_old
-        git commit -F commit-message.txt
+        git commit -m $(MESSAGE)
     
     - name: Push files
       uses: ad-m/github-push-action@master
