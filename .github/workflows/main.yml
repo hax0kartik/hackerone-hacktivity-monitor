@@ -41,20 +41,32 @@ jobs:
         echo "::set-output name=commit::$(cat commit-message.txt)"
         echo "::set-output name=hacktivity::$(cat hacktivity_old)"
         echo $FILE
+    
+    - name: Upload artifact
+    - uses: actions/upload-artifact@master
+      with:
+        name: hacktivity_old
+        path: ./hacktivity_old
+
 
   commit:
     needs: check
     runs-on: ubuntu-latest
     if: needs.check.outputs.commit != 'N'
     steps:
+
+    - uses: actions/download-artifact@master
+    - name: Download artifact
+      with:
+        name: hacktivity_old
+        path: ./hacktivity_old
+
     - uses: actions/checkout@v2
     - name: Commit files
       env:
         MESSAGE: ${{ needs.check.outputs.commit }}
         FILE: ${{ needs.check.outputs.hacktivity }}
       run: |
-        echo $FILE
-        echo $FILE > hacktivity_old
         git config --local user.email "action@github.com"
         git config --local user.name "Github action"
         git add hacktivity_old
